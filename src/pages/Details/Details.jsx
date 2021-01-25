@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Card, Popover, Modal, Spin, notification } from "antd";
-import axios from "axios";
+import React, { useState } from "react";
+import { Card, Popover, Modal, Spin } from "antd";
 import {
   CheckCircleTwoTone,
   CloseCircleTwoTone,
@@ -8,8 +7,9 @@ import {
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logOut } from "../../store/auth/actions";
+import { useAuth } from "./useAuth";
 import {
   detailsUserName,
   detailsUserEmail,
@@ -22,31 +22,9 @@ import {
 
 export const Details = () => {
   // Может быть в Redux, но для этого приложения можно использовать просто useState
-  const [user, setUser] = useState(null);
-  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [confirmVisible, setConfirmVisible] = useState(false);
-
-  useEffect(() => {
-    if (auth?.access) {
-      axios
-        .get(`http://erp.apptrix.ru/api/clients/${auth.client_id}/`, {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-          },
-        })
-        .then((response) => {
-          setUser(response.data);
-        })
-        .catch(() => {
-          notification.error({
-            message: "Произошла ошибка!",
-            description: "Пожалуйста, авторизируйтесь ещё раз",
-          });
-          dispatch(logOut());
-        });
-    }
-  }, [auth?.access, auth?.client_id]);
+  const user = useAuth();
 
   return user ? (
     <React.Fragment>

@@ -1,4 +1,19 @@
 .details {
+  &Card {
+    display: flex;
+    align-items: center;
+
+    &Avatar {
+      max-width: 100px;
+      margin-right: 20px;
+
+      img {
+        width: 100%;
+        box-shadow: 1px 1px 3px 1px #33333333;
+      }
+    }
+  }
+
   &User {
     &Title,
     &Status {

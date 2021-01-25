@@ -3,7 +3,7 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { Form, Input, Button, notification } from "antd";
 import { useDispatch } from "react-redux";
-import { logIn } from "../../store/actions";
+import { logIn } from "../../store/auth/actions";
 
 const layout = {
   labelCol: {
@@ -29,32 +29,18 @@ export const SignIn = () => {
   }
   const onFinish = (values) => {
     setFormDisabled(true);
-    console.log("Success:", values);
     axios
       .post("http://erp.apptrix.ru/api/clients/token/", values)
+      .then((response) => {
+        dispatch(logIn(response.data));
+      })
       .catch((error) => {
         notification.error({
           message: "Ошибка авторизации!",
           description: error.response.data.detail,
         });
-      })
-      .then(() => {
         setFormDisabled(false);
       });
-    dispatch(
-      logIn({
-        user: {
-          email: "lesyonoknou@gmail.com",
-          is_active: false,
-        },
-        client_id: "RU-839861",
-        phone: "+48535430288",
-        invited_by: "RU-637164",
-        name: "Olesia",
-        surname: "Nikonova",
-        country: 1,
-      })
-    );
   };
 
   return (

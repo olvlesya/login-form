@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { userReducer } from "./store/reducer";
+import { authReducer } from "./store/auth/reducer";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -31,7 +31,7 @@ const saveState = (state) => {
 
 const store = createStore(
   combineReducers({
-    user: userReducer,
+    auth: authReducer,
   }),
   loadState(),
   composeWithDevTools()

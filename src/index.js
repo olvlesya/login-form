@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import axios from "axios";
 import { authReducer } from "./store/auth/reducer";
 import "./index.css";
 import App from "./App";
@@ -37,6 +38,14 @@ const store = createStore(
   composeWithDevTools()
 );
 store.subscribe(() => saveState(store.getState()));
+
+axios.interceptors.request.use((req) => {
+  const { auth } = store.getState();
+  if (auth) {
+    req.headers["Authorization"] = `Bearer ${auth.access}`;
+  }
+  return req;
+});
 
 ReactDOM.render(
   <React.StrictMode>

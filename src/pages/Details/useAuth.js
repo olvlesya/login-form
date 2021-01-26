@@ -12,11 +12,7 @@ export const useAuth = () => {
   useEffect(() => {
     if (auth?.access) {
       axios
-        .get(`http://erp.apptrix.ru/api/clients/${auth.client_id}/`, {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-          },
-        })
+        .get(`http://erp.apptrix.ru/api/clients/${auth.client_id}/`)
         .then((response) => {
           setUser(response.data);
         })

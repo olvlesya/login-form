@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, notification } from "antd";
-import { axios } from "./request";
+import axios from "axios";
 import { layout, tailFormItemLayout } from "./formConfig";
 import { prefixSelector } from "./inputAddons";
 import { mapToRequest, mapErrorsToFieldsConfig } from "./utilities";
@@ -17,14 +17,17 @@ export const SignUp = () => {
   const onFinish = (fields) => {
     setFormDisabled(true);
     const request = mapToRequest(fields);
-    console.log(request);
-    axios(false)
+    axios
+      .post("http://erp.apptrix.ru/api/clients/create/", request)
       .then(() => {
         notification.success({ message: "Вы успешно зарегистрированы!" });
       })
       .catch((errors) => {
-        notification.error({ message: "Произошла ошибка!" });
-        formInstance.setFields(mapErrorsToFieldsConfig(errors));
+        notification.error({
+          message: "Произошла ошибка!",
+          description: errors.response.data?.message,
+        });
+        formInstance.setFields(mapErrorsToFieldsConfig(errors.response.data));
       })
       .then(() => {
         setFormDisabled(false);

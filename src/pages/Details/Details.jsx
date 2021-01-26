@@ -21,7 +21,6 @@ import {
 } from "./Details.module.scss";
 
 export const Details = () => {
-  // Может быть в Redux, но для этого приложения можно использовать просто useState
   const dispatch = useDispatch();
   const [confirmVisible, setConfirmVisible] = useState(false);
   const user = useAuth();

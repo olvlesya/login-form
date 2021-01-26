@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import axios from "axios";
+import * as axios from "axios";
 import { authReducer } from "./store/auth/reducer";
 import "./index.css";
 import App from "./App";
